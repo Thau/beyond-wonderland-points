@@ -8,7 +8,7 @@ class LoopingPathMovement
     @initial_y = y
     @max_path_length = max_path_length
 
-    if Random.rand < 0.1
+    if Random.rand < 0.05
       @paths = []
 
       search_path([[x, y]], 0)
@@ -85,6 +85,7 @@ class LoopingPathMovement
   end
 
   def set_objective
+    return if @path.empty?
     next_point = @path.shift
     @final_x = next_point[0]
     @final_y = next_point[1]
