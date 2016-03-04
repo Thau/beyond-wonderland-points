@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class LoopingPathMovement
-  def initialize(width:, height:, x:, y:, max_path_length:)
+  def initialize(width:, height:, x:, y:, max_path_length:,separation:)
     @width = width
     @height = height
     @initial_x = x
     @initial_y = y
+    @separation = separation
     @max_path_length = max_path_length
 
     if Random.rand < 0.2
@@ -56,7 +57,7 @@ class LoopingPathMovement
 
     candidates(x, y).each do |c_x, c_y|
       next if path.include?([c_x, c_y]) && [c_x, c_y] != path.first
-      if c_x.between?(25, @width - 25) && c_y.between?(25, @height - 25)
+      if c_x.between?(@separation, @width - @separation) && c_y.between?(@separation, @height - @separation)
         search_path(path + [[c_x, c_y]], depth + 1)
       end
     end
@@ -64,14 +65,14 @@ class LoopingPathMovement
 
   def candidates(x, y)
     [
-      [x, y + 25],
-      [x + 25, y + 25],
-      [x + 25, y],
-      [x + 25, y - 25],
-      [x, y - 25],
-      [x - 25, y - 25],
-      [x - 25, y],
-      [x - 25, y + 25]
+      [x, y + @separation],
+      [x + @separation, y + @separation],
+      [x + @separation, y],
+      [x + @separation, y - @separation],
+      [x, y - @separation],
+      [x - @separation, y - @separation],
+      [x - @separation, y],
+      [x - @separation, y + @separation]
     ]
   end
 
