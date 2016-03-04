@@ -8,7 +8,7 @@ class LoopingPathMovement
     @initial_y = y
     @max_path_length = max_path_length
 
-    if Random.rand < 0.05
+    if Random.rand < 0.2
       @paths = []
 
       search_path([[x, y]], 0)
@@ -56,7 +56,7 @@ class LoopingPathMovement
 
     candidates(x, y).each do |c_x, c_y|
       next if path.include?([c_x, c_y]) && [c_x, c_y] != path.first
-      if c_x.between?(0, @width) && c_y.between?(0, @height)
+      if c_x.between?(25, @width - 25) && c_y.between?(25, @height - 25)
         search_path(path + [[c_x, c_y]], depth + 1)
       end
     end

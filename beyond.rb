@@ -22,15 +22,15 @@ time = Time.new(fps: 24, bpm: 120)
 point_positions = []
 width.times do |x|
   height.times do |y|
-    dot_position = x % 25 == 0 && y % 25 == 0
+    dot_position = x.between?(25, width - 25) && y.between?(25, height - 25) && x % 25 == 0 && y % 25 == 0
     point_positions << [x, y] if dot_position
   end
 end
 
-points = Parallel.map(point_positions, threads: 16) do |x, y|
+points = Parallel.map(point_positions, in_threads: 16) do |x, y|
   puts("Generando rutas para X: #{x} Y: #{y}")
   definition = CrossPoint.new
-  movement = LoopingPathMovement.new(width: width, height: height, x: x, y: y, max_path_length: 8)
+  movement = LoopingPathMovement.new(width: width, height: height, x: x, y: y, max_path_length: 6)
   Point.new(x: x, y: y, pixel_definition: definition, movement: movement)
 end
 
